@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 
@@ -11,6 +11,7 @@ const hotelRouter = require("./hotel");
 const superAdminRouter = require("./superAdmin");
 const restaurantRouter = require("./restaurant");
 const transportRouter = require("./transport");
+const wishlistRouter = require("./wishlist");
 
 router.use("/auth", authRouter); //authentication doesnt need jwt hence before that middleware
 
@@ -35,5 +36,5 @@ router.use("/hotel", hotelRouter);
 router.use("/restaurant", restaurantRouter);
 router.use("/transport", transportRouter);
 router.use("/superAdmin", superAdminRouter);
-
+router.use("/wishlist", wishlistRouter);
 module.exports = router;

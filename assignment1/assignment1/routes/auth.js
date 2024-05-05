@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
         const cities = await Cities.findOne({ name: req.body.city })
         if (!cities) return res.json({ msg: "USER'S CITY NOT FOUND" })
         await Users.create({ ...req.body, password: await bcrypt.hash(password, 5), city: cities, admin: false, superAdmin: false });
-        await Wishlists.create({user:email});
+        await Wishlist.create({user:email});
         return res.json({ msg: "CREATED" })
 
     }

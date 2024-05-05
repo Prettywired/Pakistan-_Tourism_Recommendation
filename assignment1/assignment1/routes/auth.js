@@ -3,7 +3,8 @@ const Users = require("../models/User");
 var express = require("express");
 var router = express.Router();
 const jwt = require("jsonwebtoken");
-const Cities = require("../models/City")
+const Cities = require("../models/City");
+const Wishlist = require("../models/Wishlist");
 
 router.post("/signup", async (req, res) => {
     try {
@@ -21,7 +22,7 @@ router.post("/signup", async (req, res) => {
         let user = await Users.findOne({ email })
         if (user) return res.json({ msg: "USER EXISTS" })
         const cities = await Cities.findOne({ name: req.body.city })
-        if (!cities) return res.json({ msg: "CITY NOT FOUND" })
+        if (!cities) return res.json({ msg: "USER'S CITY NOT FOUND" })
         await Users.create({ ...req.body, password: await bcrypt.hash(password, 5), city: cities, admin: false, superAdmin: false });
         await Wishlists.create({user:email});
         return res.json({ msg: "CREATED" })

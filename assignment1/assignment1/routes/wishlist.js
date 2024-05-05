@@ -15,7 +15,6 @@ router.post("/getWishlist", async (req, res) => {
     try {
         const { email } = req.body;
 
-        // Retrieve the wishlist for the specified user
         const wishlist = await Wishlists.findOne({ user: email }).populate('city landmark activity restaurant hotel guide');
         if (!wishlist) {
             return res.status(400).json({
@@ -30,49 +29,13 @@ router.post("/getWishlist", async (req, res) => {
             data: wishlist
         });
     } catch (error) {
-        console.error(error); // Log the error for debugging
+        console.error(error);
         res.status(400).json({
             status: "error",
             message: "error retrieving wishlist"
         });
     }
 });
-
-
-/*router.post("/deleteCityFromWishlist", async (req, res) => {
-    try {
-        const { token, city } = req.body;
-
-        // Verify JWT token to get user email
-        const decoded = jwt.verify(token, "YOUR_SECRET_KEY"); // Replace YOUR_SECRET_KEY with your JWT secret key
-        const userEmail = decoded.email;
-
-        // Find the wishlist for the user
-        const wishlist = await Wishlists.findOne({ email: userEmail });
-
-        if (!wishlist) {
-            return res.status(400).json({
-                status: "error",
-                message: "wishlist not found"
-            });
-        }
-
-        // Remove city from the wishlist
-        wishlist.city = undefined; // Assuming city is stored as a single field in the wishlist
-        await wishlist.save();
-
-        res.status(200).json({
-            status: "success",
-            message: "city deleted from wishlist"
-        });
-    } catch (error) {
-        console.error(error); // Log the error for debugging
-        res.status(400).json({
-            status: "error",
-            message: "error deleting city from wishlist"
-        });
-    }
-}); */
 
 router.post("/addToWishlist", async (req, res) => {
     try {
